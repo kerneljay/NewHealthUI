@@ -3,6 +3,7 @@ import "./App.css";
 
 function App() {
   const maxPrice = 10000000000;
+  const [discordImg, setDiscordImg] = useState("https://kudos.tv/cdn/shop/files/A_AP_ROCKY_300x.png?v=1679069333");
   const [health, setHealth] = useState(2);
   const [armour, setArmour] = useState(2);
   const [voice, setVoice] = useState(false);
@@ -24,6 +25,7 @@ function App() {
       const data = event.data;
 
       if (data.type === "updateAll") {
+        if (data.setImg !== undefined) setDiscordImg(data.setImg);
         if (data.voice !== undefined) setVoice(data.voice);
         if (data.tokens !== undefined) setTokens(data.tokens);
         if (data.health !== undefined) setHealth(data.health);
@@ -111,7 +113,7 @@ function App() {
           </div>
           <div className="discord_container">
             <img
-              src="https://kudos.tv/cdn/shop/files/A_AP_ROCKY_300x.png?v=1679069333"
+              src={discordImg}
               alt=""
             />
           </div>

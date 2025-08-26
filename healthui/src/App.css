@@ -97,11 +97,12 @@
 }
 
 .health_bar {
-  width: 100%;
+   width: 100%;
   height: 0.45rem;
-  background: rgb(0, 218, 84);
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
   border-radius: 0.25rem;
-  box-shadow: 0 0 3px rgb(0, 218, 84), 0 0 8px rgb(0, 218, 84, 0.5);
 }
 
 .armour_bar {
@@ -145,6 +146,21 @@
   background: #6ec2f7;
   box-shadow: 0 0 3px rgb(25, 163, 255), 0 0 8px rgba(25, 171, 255, 0.726);
 }
+
+.health_segment {
+  flex: 1;
+  background: #242424;
+  border-radius: 0.25rem;
+  height: 100%;
+  transition: background 0.2s;
+  border: 1px solid rgba(255, 255, 255, 0.178);
+}
+
+.health_segment.filled {
+  background: #73f76e;
+  box-shadow: 0 0 3px rgb(63, 255, 25), 0 0 8px rgba(52, 255, 25, 0.726);
+}
+
 
 .voice_container {
   display: flex;
