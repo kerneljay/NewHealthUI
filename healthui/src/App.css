@@ -194,3 +194,18 @@
   justify-content: space-between;
   align-items: center;
 }
+
+
+.street2 {
+  color:rgb(109, 238, 255);
+  text-shadow: #6ec2f7 0px 0px 15px;
+}
+
+.location {
+  letter-spacing: .075rem;
+    color:rgb(255, 255, 255);
+    text-shadow: #6ec2f7 0px 0px 15px;
+} 
+.cursor {
+    box-shadow: #009dff0a 0px 0px 15px;
+}

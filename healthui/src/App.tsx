@@ -3,12 +3,16 @@ import "./App.css";
 
 function App() {
   const maxPrice = 10000000000;
-  const [discordImg, setDiscordImg] = useState("https://kudos.tv/cdn/shop/files/A_AP_ROCKY_300x.png?v=1679069333");
+  const [visible, setVisible] = useState(true);
+  const [discordImg, setDiscordImg] = useState(
+    "https://kudos.tv/cdn/shop/files/A_AP_ROCKY_300x.png?v=1679069333"
+  );
   const [health, setHealth] = useState(2);
   const [armour, setArmour] = useState(2);
   const [voice, setVoice] = useState(false);
   const [tokens, setTokens] = useState(0);
   const [heading, setHeading] = useState(0);
+  const [streetNamesVisible, setStreetNamesVisible] = useState(true);
   const [streetName1, setStreetName1] = useState("Prociopor");
   const [streetName2, setStreetName2] = useState("Paleto Bay");
   const [time, setTime] = useState(() => {
@@ -25,7 +29,10 @@ function App() {
       const data = event.data;
 
       if (data.type === "updateAll") {
-        if (data.setImg !== undefined) setDiscordImg(data.setImg);
+        if (data.streetNamesVisible !== undefined)
+          setStreetNamesVisible(data.streetNamesVisible);
+        if (data.img !== undefined) setDiscordImg(data.img);
+        if (data.visible !== undefined) setVisible(data.visible);
         if (data.voice !== undefined) setVoice(data.voice);
         if (data.tokens !== undefined) setTokens(data.tokens);
         if (data.health !== undefined) setHealth(data.health);
@@ -60,65 +67,68 @@ function App() {
 
   return (
     <>
-      <div className="info_container">
-        <div className="location_container">
-          <img
-            src="./cursor.png"
-            alt=""
-            style={{ transform: `rotate(${heading}deg)` }} // <-- Rotate based on heading
-          />
-          <h1>
-            {streetName1} | {streetName2}
-          </h1>
-        </div>
-
-        <div className="info">
-          <div className="health_container">
-            <div className="armaui_voice">
-              <div className="left_container">
-                <img src="./logo.png" alt="" />
-                <h1>
-                  £
-                  {tokens
-                    .toString()
-                    .slice(0, 10)
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  {tokens >= maxPrice ? "..." : ""}
-                </h1>
-              </div>
-
-              <div className="voice_container">
-                <h1 className="time">{time}</h1>
-                <h1>{voice ? "🔊" : "🔇"}</h1>
-              </div>
-            </div>
-
-            <div className="armour_bar">
-              {segments.map((i) => (
-                <div
-                  key={i}
-                  className={`armour_segment${i < armour ? " filled" : ""}`}
-                />
-              ))}
-            </div>
-
-            <div className="health_bar">
-              {segments.map((i) => (
-                <div
-                  key={i}
-                  className={`health_segment${i < health ? " filled" : ""}`}
-                />
-              ))}
-            </div>
-          </div>
-          <div className="discord_container">
+      {visible && (
+        <div className="info_container">
+          <div
+            className="location_container"
+            style={{ display: streetNamesVisible ? "flex" : "none" }}
+          >
             <img
-              src={discordImg}
+              src="./cursor.png"
               alt=""
+              className="cursor"
+              style={{ transform: `rotate(${heading}deg)` }} // <-- Rotate based on heading
             />
+            <h1 className="location">
+              {streetName1} | <span className="street2">{streetName2}</span>
+            </h1>
+          </div>
+
+          <div className="info">
+            <div className="health_container">
+              <div className="armaui_voice">
+                <div className="left_container">
+                  <img src="./logo.png" alt="" />
+                  <h1>
+                    £
+                    {tokens
+                      .toString()
+                      .slice(0, 10)
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    {tokens >= maxPrice ? "..." : ""}
+                  </h1>
+                </div>
+
+                <div className="voice_container">
+                  <h1 className="time">{time}</h1>
+                  <h1>{voice ? "🔊" : "🔇"}</h1>
+                </div>
+              </div>
+
+              <div className="armour_bar">
+                {segments.map((i) => (
+                  <div
+                    key={i}
+                    className={`armour_segment${i < armour ? " filled" : ""}`}
+                  />
+                ))}
+              </div>
+
+              <div className="health_bar">
+                {segments.map((i) => (
+                  <div
+                    key={i}
+                    className={`health_segment${i < health ? " filled" : ""}`}
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="discord_container">
+              <img src={discordImg} alt="" />
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
