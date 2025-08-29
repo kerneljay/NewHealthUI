@@ -12,6 +12,8 @@ function App() {
   const [voice, setVoice] = useState(false);
   const [tokens, setTokens] = useState(0);
   const [heading, setHeading] = useState(0);
+  const [healthColour, setHealthColour] = useState("#73f76e");
+  const [armourColour, setArmourColour] = useState("#6ec2f7");
   const [streetNamesVisible, setStreetNamesVisible] = useState(true);
   const [streetName1, setStreetName1] = useState("Prociopor");
   const [streetName2, setStreetName2] = useState("Paleto Bay");
@@ -31,6 +33,8 @@ function App() {
       if (data.type === "updateAll") {
         if (data.streetNamesVisible !== undefined)
           setStreetNamesVisible(data.streetNamesVisible);
+        if (data.healthColour !== undefined) setHealthColour(data.healthColour);
+        if (data.armourColour !== undefined) setArmourColour(data.armourColour);
         if (data.img !== undefined) setDiscordImg(data.img);
         if (data.visible !== undefined) setVisible(data.visible);
         if (data.voice !== undefined) setVoice(data.voice);
@@ -110,6 +114,9 @@ function App() {
                   <div
                     key={i}
                     className={`armour_segment${i < armour ? " filled" : ""}`}
+                    style={{
+                      backgroundColor: i < armour ? armourColour : undefined,
+                    }}
                   />
                 ))}
               </div>
@@ -119,6 +126,10 @@ function App() {
                   <div
                     key={i}
                     className={`health_segment${i < health ? " filled" : ""}`}
+                    style={{
+                      boxShadow: i < health ? "0 0 3px rgb(63, 255, 25)" : "",
+                      backgroundColor: i < health ? healthColour : undefined,
+                    }}
                   />
                 ))}
               </div>
