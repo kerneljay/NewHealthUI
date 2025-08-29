@@ -115,6 +115,7 @@ function App() {
                     key={i}
                     className={`armour_segment${i < armour ? " filled" : ""}`}
                     style={{
+                      boxShadow: i < armour ? "0 0 3px rgb(25, 163, 255)" : "",
                       backgroundColor: i < armour ? armourColour : undefined,
                     }}
                   />
