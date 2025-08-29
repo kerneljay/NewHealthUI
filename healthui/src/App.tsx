@@ -115,7 +115,7 @@ function App() {
                     key={i}
                     className={`armour_segment${i < armour ? " filled" : ""}`}
                     style={{
-                      boxShadow: i < armour ? "0 0 3px rgb(25, 163, 255)" : "",
+                      boxShadow: i < armour ? `0 0 3px ${armourColour}` : "",
                       backgroundColor: i < armour ? armourColour : undefined,
                     }}
                   />
@@ -128,7 +128,7 @@ function App() {
                     key={i}
                     className={`health_segment${i < health ? " filled" : ""}`}
                     style={{
-                      boxShadow: i < health ? "0 0 3px rgb(63, 255, 25)" : "",
+                      boxShadow: i < health ? `0 0 3px ${healthColour}` : "",
                       backgroundColor: i < health ? healthColour : undefined,
                     }}
                   />
