@@ -14,6 +14,7 @@ function App() {
   const [heading, setHeading] = useState(0);
   const [healthColour, setHealthColour] = useState("#73f76e");
   const [armourColour, setArmourColour] = useState("#6ec2f7");
+  const [streetNameColour, setStreetNameColour] = useState("#6ec2f7");
   const [streetNamesVisible, setStreetNamesVisible] = useState(true);
   const [streetName1, setStreetName1] = useState("Prociopor");
   const [streetName2, setStreetName2] = useState("Paleto Bay");
@@ -33,6 +34,7 @@ function App() {
       if (data.type === "updateAll") {
         if (data.streetNamesVisible !== undefined)
           setStreetNamesVisible(data.streetNamesVisible);
+        if (data.streetNameColour !== undefined) setStreetNameColour(data.streetNameColour);
         if (data.healthColour !== undefined) setHealthColour(data.healthColour);
         if (data.armourColour !== undefined) setArmourColour(data.armourColour);
         if (data.img !== undefined) setDiscordImg(data.img);
@@ -84,7 +86,7 @@ function App() {
               style={{ transform: `rotate(${heading}deg)` }} // <-- Rotate based on heading
             />
             <h1 className="location">
-              {streetName1} | <span className="street2">{streetName2}</span>
+              {streetName1} | <span className="street2" style={{ color: streetNameColour }}>{streetName2}</span>
             </h1>
           </div>
 
