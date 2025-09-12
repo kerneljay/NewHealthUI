@@ -4,6 +4,8 @@ import "./App.css";
 function App() {
   const maxPrice = 10000000000;
   const [visible, setVisible] = useState(true);
+  const [otherInfoVisible, setOtherInfoVisible] = useState(true);
+  const [otherInfo, setOtherInfo] = useState("Turf capture complete in 30 seconds");
   const [discordImg, setDiscordImg] = useState(
     "https://kudos.tv/cdn/shop/files/A_AP_ROCKY_300x.png?v=1679069333"
   );
@@ -46,6 +48,8 @@ function App() {
         if (data.heading !== undefined) setHeading(data.heading);
         if (data.street1 !== undefined) setStreetName1(data.street1);
         if (data.street2 !== undefined) setStreetName2(data.street2);
+        if (data.setOtherInfoVisible !== undefined) setOtherInfoVisible(data.setOtherInfoVisible);
+        if (data.setOtherInfo !== undefined) setOtherInfo(data.setOtherInfo);
       }
     };
 
@@ -90,7 +94,7 @@ function App() {
             </h1>
           </div>
 
-          <div className="info">
+          <div style={otherInfoVisible ? { borderBottomLeftRadius: "0", borderBottomRightRadius: "0" } : { borderBottomLeftRadius: "0.625rem", borderBottomRightRadius: "0.625rem" }} className="info">
             <div className="health_container">
               <div className="armaui_voice">
                 <div className="left_container">
@@ -141,6 +145,13 @@ function App() {
               <img src={discordImg} alt="" />
             </div>
           </div>
+          {otherInfoVisible && (
+
+          <div className="other_info">
+            <h1>{otherInfo}</h1>
+          </div>
+          )}
+
         </div>
       )}
     </>
