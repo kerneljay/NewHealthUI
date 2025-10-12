@@ -11,12 +11,13 @@
 :root {
   font-family: "Kode Mono";
   font-weight: 400;
-  color-scheme: light dark;
+  background: rgba(20, 20, 20, 0.89);
   color: rgba(255, 255, 255, 0.87);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }
 
 * {
@@ -39,7 +40,7 @@
 
 .info {
   background: radial-gradient(rgba(22, 22, 22, 0.9), rgba(27, 27, 27, 0.7));
-  border: 1px dashed rgba(255, 255, 255, 0.13);
+  border: 2px dashed rgba(128, 128, 128, 0.274);
   width: 24rem;
   display: flex;
   flex-direction: row;
@@ -64,7 +65,7 @@
     border-radius: 0.625rem;
     border: 1px dashed rgb(111 111 111);
     padding: 0.2rem;
-    margin: 0.2rem;
+    margin: 0.1rem;
 }
 
 .left_container {
@@ -228,4 +229,86 @@
 .other_info > h1 {
   font-size: 1rem;
   font-weight: 600;
+}
+
+.instructional_buttons {
+  height: 4rem;
+  display: flex;
+  background: radial-gradient(rgba(22, 22, 22, 0.9), rgba(27, 27, 27, 0.7));
+  border: 2px dashed rgba(128, 128, 128, 0.274);
+  margin-top: 1rem;
+  border-radius: 4px;
+}
+
+.instructional_button {
+  padding: 1rem 1.25rem;
+  display: flex;
+  gap: 1rem;
+  font-size: .5rem;
+  justify-content: center;
+  align-items: center;
+}
+.key_button_holder {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 2px;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed rgb(255, 255, 255);
+  background: radial-gradient(rgba(253, 255, 141, 0.459), rgba(255, 239, 95, 0.616));
+}
+.img_icon {
+  width: 20px;
+  height: 20px;
+  filter: invert();
+}
+.instructional_button h1 {
+  font-size: .7rem;
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.instructional_button h2 {
+  color: rgba(255, 255, 255, 0.418);
+}
+
+
+.key_button_holder_container {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.instructional_buttons svg {
+  /* fill: red; */
+  color: rgb(255, 255, 255);
+  filter: drop-shadow(0px 0px 5px rgb(255, 255, 255));
+}
+
+.key_button_holder {
+  transition: transform 0.1s ease;
+}
+
+.key_button_holder.pressed {
+  transform: translateY(2px) scale(0.95);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+.instructional_buttons_wrapper {
+  transform: translateY(100%);  /* Default to hidden */
+  transition: transform 2.0s ease, opacity 2.0s ease;
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.instructional_buttons_wrapper.slide-up {
+  transform: translateY(0%);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.instructional_buttons_wrapper.slide-down {
+  transform: translateY(100%);
+  opacity: 0;
+  pointer-events: none;
 }

@@ -1,10 +1,45 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import { InstructionalButtons } from "./InstructionalButtons";
+  import {
+  LeftArrowIcon,
+  RightArrowIcon,
+  SpaceIcon,
+  UpArrowIcon,
+  DownArrowIcon,
+  EnterIcon,
+  MouseScrollIcon,
+} from "./Icons";
+
+interface Instruction {
+  keys: any[];       // array of icon components
+  label: string;
+  keyCodes?: string[];  // optional: physical key mappings
+}
+const iconMap: Record<string, React.ReactElement> = {
+  LeftArrow: <LeftArrowIcon />,
+  RightArrow: <RightArrowIcon />,
+  UpArrow: <UpArrowIcon />,
+  DownArrow: <DownArrowIcon />,
+  Space: <SpaceIcon />,
+  Enter: <EnterIcon />,
+  ScrollWheel: <MouseScrollIcon />
+};
+const convertInstructionalButtons = (rawButtons: any[]): Instruction[] => {
+  return rawButtons.map((btn) => ({
+    label: btn.label,
+    keyCodes: btn.keys, // Keep original key names if needed
+    keys: (btn.keys || []).map((key: string, i: number) => {
+      const Icon = iconMap[key];
+      return Icon ? <span key={i}>{Icon}</span> : <span key={i}>{key}</span>;
+    }),
+  }));
+};
 
 function App() {
   const maxPrice = 10000000000;
   const [visible, setVisible] = useState(true);
-  const [otherInfoVisible, setOtherInfoVisible] = useState(true);
+  const [otherInfoVisible, setOtherInfoVisible] = useState(false);
   const [otherInfo, setOtherInfo] = useState("Turf capture complete in 30 seconds");
   const [discordImg, setDiscordImg] = useState(
     "https://kudos.tv/cdn/shop/files/A_AP_ROCKY_300x.png?v=1679069333"
@@ -20,6 +55,7 @@ function App() {
   const [streetNamesVisible, setStreetNamesVisible] = useState(true);
   const [streetName1, setStreetName1] = useState("Prociopor");
   const [streetName2, setStreetName2] = useState("Paleto Bay");
+  const [instructionalButtonsVisible, setInstructionalButtonsVisible] = useState(false);
   const [time, setTime] = useState(() => {
     const now = new Date();
     return now.toLocaleTimeString([], {
@@ -29,6 +65,36 @@ function App() {
     });
   });
 
+
+
+
+ const [instructionalButtons, setInstructionalButtons] = useState<Instruction[]>([
+    {
+      keys: [<LeftArrowIcon key="left" />, <RightArrowIcon key="right" />],
+      label: "Increase/Decrease Bet",
+      keyCodes: ["ArrowLeft", "ArrowRight"],
+    },
+    {
+      keys: [<SpaceIcon key="space" />],
+      label: "Enter Custom Bet",
+      keyCodes: [" "], // spacebar
+    },
+    {
+      keys: [<UpArrowIcon key="up" />, <DownArrowIcon key="down" />],
+      label: "Up/Down Arrows",
+      keyCodes: ["ArrowUp", "ArrowDown"],
+    },
+    {
+      keys: [<EnterIcon key="enter" />],
+      label: "Place Bet",
+      keyCodes: ["Enter"],
+    },
+    {
+      keys: [<MouseScrollIcon key = "scrollwheel" />],
+      label: "Increase/Decrease Speed",
+      keyCodes: ["Enter"],
+    },
+  ]);
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       const data = event.data;
@@ -39,6 +105,22 @@ function App() {
         if (data.streetNameColour !== undefined) setStreetNameColour(data.streetNameColour);
         if (data.healthColour !== undefined) setHealthColour(data.healthColour);
         if (data.armourColour !== undefined) setArmourColour(data.armourColour);
+        if (data.setInstructionalButtonsVisible !== undefined) {
+          if (!data.setInstructionalButtonsVisible) {
+          setTimeout(() => {
+              // console.log("Set display none")
+              document.getElementById("instructionalButtons")!.style.display = "none";
+            }, 1300);
+          } else {
+            // console.log("Set display block")
+            document.getElementById("instructionalButtons")!.style.display = "block";
+          }
+          setInstructionalButtonsVisible(data.setInstructionalButtonsVisible)
+        };
+        if (data.setInstructionalButtons !== undefined) {
+                    const formatted = convertInstructionalButtons(data.setInstructionalButtons);
+          setInstructionalButtons(formatted);
+        }
         if (data.img !== undefined) setDiscordImg(data.img);
         if (data.visible !== undefined) setVisible(data.visible);
         if (data.voice !== undefined) setVoice(data.voice);
@@ -100,7 +182,6 @@ function App() {
                 <div className="left_container">
                   <img src="./logo.png" alt="" />
                   <h1>
-                    £
                     {tokens
                       .toString()
                       .slice(0, 10)
@@ -151,6 +232,18 @@ function App() {
             <h1>{otherInfo}</h1>
           </div>
           )}
+
+
+<div
+id="instructionalButtons"
+  className={`instructional_buttons_wrapper ${
+    instructionalButtonsVisible ? "slide-up" : "slide-down"
+  }`}
+>
+  <InstructionalButtons instructionalButtons = {instructionalButtons} />
+</div>
+
+
 
         </div>
       )}
